@@ -20,6 +20,7 @@
 
     <div class="row">
         <div class="col">
+            {% if type == "view" %}
 
             <fieldset disabled>
                 <div class="row disabled">
@@ -43,11 +44,43 @@
                     </div>
                 </div>
              </fieldset>
-             
+             {% elif type == 'edit' %}
+
+             <form action="" method="post">
+                {% csrf_token %}
+
+             <div class="row disabled">
+                <div class="col col-8">
+                    Название: <input type="text" name = "name" value="{{snippet.name}}" class="form-control">
+                </div>
+                <div class="col col-4">
+                    Дата создания:<input type="text" name = "creation_date" value="{{snippet.creation_date}}" class="form-control">
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-6">
+
+                        <textarea name="code">
+                            {{snippet.code}}
+                        </textarea>
+         
+
+                </div>
+            </div>   
+            <div class="form-group-row">
+                <div class="col-4"> 
+                    <br>
+                    <button class="btn btn-primary btn-block" type='submit'> Обновить</button>
+            </div>
+            </div>   
+
+        </form>
+             {% endif %}
 
         </div>
     </div>
-</div>}
+</div>
  
 
 {% endblock %} 

@@ -47,7 +47,8 @@ def snippet_detail(request,snippet_id):
     except ObjectDoesNotExist:
         return HttpResponseNotFound(f"Snippet{snippet_id} not fount")
     context={'pagename': 'Просмотр сниппетов',
-            "snippet":snippet,}
+            "snippet":snippet,
+            "type":"view"}
 
     return render(request, 'pages/snippet_detail.html', context)
 
@@ -65,29 +66,29 @@ def del_snippet_page(request, snippet_id):
        return redirect("snippets_page")
     
 def edit_snippet_page(request, snippet_id):
-    if request.method =="GET":
-        try:
-            snippet = Snippet.objects.get(id=snippet_id)
-        except ObjectDoesNotExist:
-            return HttpResponseNotFound(f"Snippet{snippet_id} not fount")
-        context={'pagename': 'Просмотр сниппетов',
-            "snippet":snippet,}
-
-        return render(request, 'pages/red_snippet.html', context)
-     #Создаем пустую форму при запросе методом GET
+    try:
+        snippet = Snippet.objects.get(id=snippet_id)
+    except ObjectDoesNotExist:
+        return HttpResponseNotFound(f"Snippet{snippet_id} not fount")
+    #Получаем страницу данных сниппета
+    #Variant 1
     #if request.method =="GET":
-        #form = SnippetForm()
-    #     context = {'pagename': 'Редкатирование сниппета',
-    #            'snippet':snippet,
-    #            }
-    # return render(request, 'pages/red_snippet.html', context)
-    #Получаем данные из формы и на их основе создаем новый экземпляр
+    #form = SnippetForm(instance=snippet) #если вызвать форму редактирвоания с заполненными полями
+    #return render(request,"pages/add_snippet.html",{form:form})
+    #Variant 2
+    if request.method =="GET":
+        context={'pagename': 'Просмотр сниппетов',
+            "snippet":snippet,
+            "type":"edit",}
+        return render(request, 'pages/snippet_detail.html', context)
+    #Используем данные из формы и сохраняем в БД
     if request.method == "POST":
-       form = SnippetForm(request.POST)
-       if form.is_valid():
-            snippet.name="New name" #request.POST("name")
-            snippet.save()
-            return redirect("snippets_page")
+        data_form = request.POST
+        snippet.name=data_form["name"]
+        snippet.code=data_form["code"]
+        snippet.creation_date=data_form["creation_date"] or snippet.creation_date
+        snippet.save()
+        return redirect("snippets_page")
     return redirect("snippets_page")
 
 
