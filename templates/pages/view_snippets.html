@@ -26,6 +26,7 @@
                         <th scope="col">ID</th>
                         <th scope="col">Название</th>
                         <th scope="col">Дата создания</th>
+                        <th scope="col"> Действия</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -36,6 +37,10 @@
                         <td scope="row">{{snippet.id}}</td>
                         <td><a href={% url 'snippet_detail' snippet.id %}> {{snippet.name}}</a></td>
                         <td>{{snippet.creation_date}}</td>
+                        <td> 
+                            <a href={% url 'red_snippet' snippet.id%}> Редактировать</a> 
+                            <a href={% url 'del_snippet' snippet.id%}> Удалить</a>   
+                        </td>
                     </tr>
 
                     {% endfor %}

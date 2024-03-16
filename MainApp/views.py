@@ -45,7 +45,7 @@ def snippet_detail(request,snippet_id):
     try:
         snippet = Snippet.objects.get(id=snippet_id)
     except ObjectDoesNotExist:
-        return HttpResponseNotFound(f"Snipprt{snippet_id} not fount")
+        return HttpResponseNotFound(f"Snippet{snippet_id} not fount")
     context={'pagename': 'Просмотр сниппетов',
             "snippet":snippet,}
 
@@ -58,3 +58,14 @@ def snippet_detail(request,snippet_id):
 #            form.save()
 #            return redirect("snippets_page")
 #        return render(request,'add_snippet.html',{'form': form})
+
+def del_snippet_page(request, snippet_id):
+    #Создаем пустую форму при запросе методом GET
+       snippet = Snippet.objects.get(id=snippet_id)
+       snippet.delete()
+       return redirect("snippets_page")
+    
+def red_snippet_page(request, snippet_id):
+    
+    return redirect("snippets_page")
+
