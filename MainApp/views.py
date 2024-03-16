@@ -4,6 +4,7 @@ from MainApp.models import Snippet
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms import ModelForm
 from MainApp.models import Snippet
+from django.contrib import auth
 
 
 class SnippetForm(ModelForm):
@@ -92,3 +93,21 @@ def edit_snippet_page(request, snippet_id):
     return redirect("snippets_page")
 
 
+def login(request):
+   if request.method == 'POST':
+       username = request.POST.get("username")
+       password = request.POST.get("password")
+       print("username =", username)
+       print("password =", password)
+       user = auth.authenticate(request, username=username, password=password)
+       if user is not None:
+           auth.login(request, user)
+       else:
+           # Return error message
+           pass
+   return redirect('home')
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect('home')
