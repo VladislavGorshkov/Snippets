@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% comment %} {% extends 'base.html' %}
+
+
+{% block content %}
+
+<!-- Begin page content -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>{{ pagename }}</h1>
+                <hr>
+            </div>
+        </div>
+
+                 <div class="row">
+                    <div class="col">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }} 
+                            <div class="form-group-row">
+                                <div class="col-6">
+                                    <input type="submit" class="btn btn-primary btn-block" value="Сохранить"/>
+                                </div>
+                            </div>
+                         </form>
+            
+                    </div>
+                </div>
+    </div>
+
+
+{% endblock %}  {% endcomment %}
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <h1>{{ pagename }}</h1>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <p>На данной страницы будут отображаться все созданные сниппеты.</p>
+              <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="row disabled">
+                    <div class="col col-8">
+                        Название: <input type="text" name = "name" value="{{snippet.name}}" class="form-control">
+                    </div>
+                    <div class="col col-4">
+                        Дата создания:<input type="text" name = "date" value="{{snippet.creation_date}}" class="form-control">
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col">
+                            <input type="textarea" name = "code" value="{{snippet.code}}" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group-row">
+                    <div class="col-6">
+                        <input type="submit" class="btn btn-primary btn-block" value="Сохранить"/>
+                    </div>
+                </div>
+            </form>
+
+             
+
+        </div>
+    </div>
+</div>
+ 
+
+{% endblock %} 

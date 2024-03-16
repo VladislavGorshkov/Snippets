@@ -60,12 +60,34 @@ def snippet_detail(request,snippet_id):
 #        return render(request,'add_snippet.html',{'form': form})
 
 def del_snippet_page(request, snippet_id):
-    #Создаем пустую форму при запросе методом GET
        snippet = Snippet.objects.get(id=snippet_id)
        snippet.delete()
        return redirect("snippets_page")
     
-def red_snippet_page(request, snippet_id):
-    
+def edit_snippet_page(request, snippet_id):
+    if request.method =="GET":
+        try:
+            snippet = Snippet.objects.get(id=snippet_id)
+        except ObjectDoesNotExist:
+            return HttpResponseNotFound(f"Snippet{snippet_id} not fount")
+        context={'pagename': 'Просмотр сниппетов',
+            "snippet":snippet,}
+
+        return render(request, 'pages/red_snippet.html', context)
+     #Создаем пустую форму при запросе методом GET
+    #if request.method =="GET":
+        #form = SnippetForm()
+    #     context = {'pagename': 'Редкатирование сниппета',
+    #            'snippet':snippet,
+    #            }
+    # return render(request, 'pages/red_snippet.html', context)
+    #Получаем данные из формы и на их основе создаем новый экземпляр
+    if request.method == "POST":
+       form = SnippetForm(request.POST)
+       if form.is_valid():
+            snippet.name="New name" #request.POST("name")
+            snippet.save()
+            return redirect("snippets_page")
     return redirect("snippets_page")
+
 

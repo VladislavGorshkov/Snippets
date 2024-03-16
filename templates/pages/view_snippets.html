@@ -38,8 +38,8 @@
                         <td><a href={% url 'snippet_detail' snippet.id %}> {{snippet.name}}</a></td>
                         <td>{{snippet.creation_date}}</td>
                         <td> 
-                            <a href={% url 'red_snippet' snippet.id%}> Редактировать</a> 
-                            <a href={% url 'del_snippet' snippet.id%}> Удалить</a>   
+                            <a href={% url 'snippet_edit' snippet.id%}> Редактировать</a> 
+                            <a href={% url 'snippet_delete' snippet.id%}> Удалить</a>   
                         </td>
                     </tr>
 
